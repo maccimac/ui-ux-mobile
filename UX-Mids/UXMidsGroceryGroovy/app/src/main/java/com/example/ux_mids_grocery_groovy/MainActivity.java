@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         gList = new ArrayList<GroceryItem>();
-        gList.add(new GroceryItem());
-        gList.add(new GroceryItem());
+        gList.add(new GroceryItem("tomatoes", R.drawable.tomato));
+        gList.add(new GroceryItem("cucumbers", R.drawable.cucumber));
+        gList.add(new GroceryItem("mushrooms", R.drawable.mushroom));
 
         GroceryAdapter groceryAdapter = new GroceryAdapter(gList);
         LinearLayoutManager lm = new LinearLayoutManager(MainActivity.this);

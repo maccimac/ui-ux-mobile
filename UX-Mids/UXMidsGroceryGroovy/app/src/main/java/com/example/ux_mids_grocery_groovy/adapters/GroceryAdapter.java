@@ -18,10 +18,12 @@ import java.util.List;
  * 1. Extend adapter
  * 2. Implement all methods
  * 3. Create a ViewHolder: GroceryViewHolder (uses the pre-made grocery_list_item)
+ *  3.1. ensure tp set holderBinding
  * 4. Populate on CreateViewHolder by inflating binding
- * 4.1. Inflate, bind, return ViewHolder
- * 4.2. Ensure getItemCount()
- * 5.
+ *  4.1. Inflate, bind, return ViewHolder
+ *  4.2. Ensure getItemCount()
+ * 5. Use onBindViewHolder to apply texts and images
+ *  5.1. Use holder.holderBinding
  * 6.
  *
  *
@@ -53,7 +55,10 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
 
     @Override
     public void onBindViewHolder(@NonNull GroceryAdapter.GroceryViewHolder holder, int position) {
-
+        holder.holderBinding.listImage.setImageResource(
+                groceryList.get(position).imageId
+        );
+        holder.holderBinding.listTitle.setText( groceryList.get(position).name);
     }
 
     @Override
@@ -68,7 +73,9 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
 
         public GroceryViewHolder(@NonNull View itemView, GroceryListItemBinding holderBinding ){
 
+
             super(itemView);
+            this.holderBinding = holderBinding;
 //            this.holderBinding.getRoot().setOnClickListener(
 //                    new View.OnClickListener() {
 //                        @Override
