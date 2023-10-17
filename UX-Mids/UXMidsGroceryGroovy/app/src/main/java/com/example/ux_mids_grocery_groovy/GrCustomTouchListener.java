@@ -12,10 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.view.GestureDetectorCompat;
 
+import com.example.ux_mids_grocery_groovy.model.GroceryItem;
+import java.util.ArrayList;
+
 public class GrCustomTouchListener implements View.OnTouchListener{
 
     Context context;
     GestureDetectorCompat gestureDetectorCompat;
+
+
 
     // CONSTRUCTOR 1:
     public GrCustomTouchListener(Context context){

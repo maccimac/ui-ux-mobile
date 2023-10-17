@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="353dp"
         android:text="Swip Up, Down, Click, DoubleClick"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewGroceryList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.465" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewGroceryList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="120dp"
@@ -41,5 +41,5 @@
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewGroceryList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

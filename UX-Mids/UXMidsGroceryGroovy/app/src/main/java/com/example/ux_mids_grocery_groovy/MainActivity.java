@@ -1,5 +1,25 @@
+package com.example.ux_mids_grocery_groovy;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.ux_mids_grocery_groovy.databinding.*;
+import com.example.ux_mids_grocery_groovy.model.GroceryItem;
+import com.example.ux_mids_grocery_groovy.adapters.GroceryAdapter;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * STEPS
+ * TOUCH LISTENERS
+ * 0. Create Recycler View .xml layout (grocery_list_item)
  * 1. View binding: Attach binding to Gradle; Sync
  * 2. Create CustomTouchListener >  With GestureDetectorListener
  * 3. GestureDetector.SimpleOnGestureListener : Right click > Generate all methods
@@ -7,22 +27,17 @@
  * 5. Create custom method onDoubleClick and attach to onDoubleTap
  * 5.1. Apply #5 to onSingleClick, onSwipeLeft, onSwipeRight
  *
+ * RECYCLER VIEW
+ * I. Create GroceryAdapter, see file
+ * II. Create simple GroceryItem class
+ * III. Attach adapter
+ *
  */
 
 
-
-package com.example.ux_mids_grocery_groovy;
-
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.ux_mids_grocery_groovy.databinding.*;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Toast;
-
 public class MainActivity extends AppCompatActivity {
+
+    List<GroceryItem> gList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(MainActivity.this, "HI", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+
+        gList = new ArrayList<GroceryItem>();
+        gList.add(new GroceryItem());
+        gList.add(new GroceryItem());
+
+        GroceryAdapter groceryAdapter = new GroceryAdapter(gList);
+        LinearLayoutManager lm = new LinearLayoutManager(MainActivity.this);
+        binding.recyclerViewGroceryList.setLayoutManager(lm);
+        binding.recyclerViewGroceryList.setAdapter(groceryAdapter);
 
 
         binding.mainFab.setOnTouchListener(
