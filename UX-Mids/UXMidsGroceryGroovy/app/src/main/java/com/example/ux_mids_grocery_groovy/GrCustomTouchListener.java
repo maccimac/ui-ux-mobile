@@ -15,7 +15,8 @@ import androidx.core.view.GestureDetectorCompat;
 import com.example.ux_mids_grocery_groovy.model.GroceryItem;
 import java.util.ArrayList;
 
-public class GrCustomTouchListener implements View.OnTouchListener{
+public class GrCustomTouchListener
+    implements View.OnTouchListener{
 
     Context context;
     GestureDetectorCompat gestureDetectorCompat;
@@ -96,6 +97,7 @@ public class GrCustomTouchListener implements View.OnTouchListener{
 //    }
 
     public void onDoubleClick(){
+        Log.d("GrCustomTouchListener", "dbl :: " + context.toString());
         Toast.makeText(context, "I just wanted to show a toast. DoubleClick", Toast.LENGTH_SHORT).show();
     }
 
@@ -106,9 +108,9 @@ public class GrCustomTouchListener implements View.OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 //        return false;
+        Log.d("GrCustomTouchListener", "on touch :: " + context.toString());
         return gestureDetectorCompat.onTouchEvent(event);
     }
 
 
 }
-   

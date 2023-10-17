@@ -1,16 +1,22 @@
 package com.example.ux_mids_grocery_groovy;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ux_mids_grocery_groovy.databinding.*;
 import com.example.ux_mids_grocery_groovy.model.GroceryItem;
 import com.example.ux_mids_grocery_groovy.adapters.GroceryAdapter;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -31,6 +37,14 @@ import java.util.List;
  * I. Create GroceryAdapter, see file
  * II. Create simple GroceryItem class
  * III. Attach adapter
+ * 1. Populate list
+ * 2. Create new adapter instance holding list: new GroceryAdapter(gList)
+ * 3. Create layout manager or grid manager
+ * 4. Apply layout manager to recyvclerView element
+ * 5. Aply adapter to recyclerView element
+ *
+ * SWIPING
+ *
  *
  */
 
@@ -62,6 +76,51 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(MainActivity.this);
         binding.recyclerViewGroceryList.setLayoutManager(lm);
         binding.recyclerViewGroceryList.setAdapter(groceryAdapter);
+
+        // ITEM TOUCH HELPER
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+
+            @Override
+            public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return 0.1f;
+//                return super.getSwipeThreshold(viewHolder);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                String groceryName = gList.get(viewHolder.getAdapterPosition()).name;
+                int position = viewHolder.getAdapterPosition();
+                if(direction == ItemTouchHelper.LEFT){
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+                    EditText editTextName = new EditText(MainActivity.this);
+                    alertBuilder.setView(editTextName);
+                    alertBuilder.setTitle("Edit grocery name");
+                    alertBuilder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gList.get(position).name = editTextName.getText().toString();
+                            groceryAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    alertBuilder.show();
+                }
+
+            }
+        };
+//        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(binding.recyclerViewGroceryList);
+
+        // CUSTOM TOUCH LISTENER
 
 
         binding.mainFab.setOnTouchListener(
