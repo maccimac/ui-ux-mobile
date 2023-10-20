@@ -41,7 +41,7 @@ import java.util.List;
  * 2. Create new adapter instance holding list: new GroceryAdapter(gList)
  * 3. Create layout manager or grid manager
  * 4. Apply layout manager to recyvclerView element
- * 5. Aply adapter to recyclerView element
+ * 5. Aplly adapter to recyclerView element
  *
  * SWIPING
  *
@@ -52,12 +52,15 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     List<GroceryItem> gList;
+    public int groceryImgId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        groceryImgId = R.drawable.groocery_bag;
+
 //        setContentView(R.layout.activity_main);
 
 //        binding.mainFab.setOnClickListener(new View.OnClickListener() {
@@ -68,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         gList = new ArrayList<GroceryItem>();
-        gList.add(new GroceryItem("tomatoes", R.drawable.tomato));
-        gList.add(new GroceryItem("cucumbers", R.drawable.cucumber));
-        gList.add(new GroceryItem("mushrooms", R.drawable.mushroom));
+        gList.add(new GroceryItem("tomatoes", R.drawable.tomato, groceryImgId));
+        gList.add(new GroceryItem("cucumbers", R.drawable.cucumber, groceryImgId));
+        gList.add(new GroceryItem("mushrooms", R.drawable.mushroom, groceryImgId));
 
         GroceryAdapter groceryAdapter = new GroceryAdapter(gList);
         LinearLayoutManager lm = new LinearLayoutManager(MainActivity.this);
         binding.recyclerViewGroceryList.setLayoutManager(lm);
         binding.recyclerViewGroceryList.setAdapter(groceryAdapter);
 
-        // ITEM TOUCH HELPER
+        // ITEM TOUCH HELPER: Swiping
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
 
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
@@ -102,52 +106,52 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
                     EditText editTextName = new EditText(MainActivity.this);
                     alertBuilder.setView(editTextName);
-                    alertBuilder.setTitle("Edit grocery name");
-                    alertBuilder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                    alertBuilder.setTitle("Add note");
+                    alertBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            gList.get(position).name = editTextName.getText().toString();
+                            gList.get(position).note = editTextName.getText().toString();
+
                             groceryAdapter.notifyDataSetChanged();
                         }
                     });
-
                     alertBuilder.show();
+                }else{
+                    gList.remove(position);
+                    groceryAdapter.notifyDataSetChanged();
                 }
 
             }
         };
-//        ItemTouchHelper helper = new ItemTouchHelper(callback);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerViewGroceryList);
 
         // CUSTOM TOUCH LISTENER
-
-
-        binding.mainFab.setOnTouchListener(
-                new GrCustomTouchListener(MainActivity.this){
-
-                    @Override
-                    public void onSingleClick() {
-                        Toast.makeText(context, "HI", Toast.LENGTH_SHORT).show();
-                        super.onSingleClick();
-                    }
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return super.onTouch(v, event);
-                    }
-
-                    @Override
-                    public void onDoubleClick(){
-                        Log.d(
-                                "MAC",
-                                "double click"
-                        );
-
-                        Toast.makeText(context, "HI", Toast.LENGTH_SHORT).show();
-                        super.onDoubleClick();
-                    }
-                }
-        );
+//        binding.mainFab.setOnTouchListener(
+//                new GrCustomTouchListener(MainActivity.this){
+//
+//                    @Override
+//                    public void onSingleClick() {
+//                        Toast.makeText(context, "HI", Toast.LENGTH_SHORT).show();
+//                        super.onSingleClick();
+//                    }
+//
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        return super.onTouch(v, event);
+//                    }
+//
+//                    @Override
+//                    public void onDoubleClick(){
+//                        Log.d(
+//                                "MAC",
+//                                "double click"
+//                        );
+//
+//                        Toast.makeText(context, "HI", Toast.LENGTH_SHORT).show();
+//                        super.onDoubleClick();
+//                    }
+//                }
+//        );
     }
 }

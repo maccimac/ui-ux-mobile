@@ -40,7 +40,9 @@ public class GrCustomTouchListener
 
         @Override
         public void onLongPress(@NonNull MotionEvent e) {
+            onLongClick();
             super.onLongPress(e);
+
         }
 
         @Override
@@ -60,7 +62,8 @@ public class GrCustomTouchListener
 
         @Override
         public boolean onDown(@NonNull MotionEvent e) {
-            return false;
+//            return false;
+            return true;
 //            return super.onDown(e);
         }
 
@@ -103,6 +106,10 @@ public class GrCustomTouchListener
 
     public void onSingleClick(){
         Toast.makeText(context, "I just wanted to show a toast", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onLongClick(){
+
 
     }
     @Override
@@ -111,6 +118,8 @@ public class GrCustomTouchListener
         Log.d("GrCustomTouchListener", "on touch :: " + context.toString());
         return gestureDetectorCompat.onTouchEvent(event);
     }
+
+
 
 
 }
